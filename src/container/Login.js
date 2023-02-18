@@ -3,31 +3,33 @@ import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 
 import { useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 
 import shareVideo from "../assets/share.mp4";
 import logo from "../assets/logowhite.png";
-
-const successResponse = (response) => {
-  console.log(response);
-  const decoded = jwt_decode(response.credential);
-  localStorage.setItem("user", decoded.name);
-
-  const doc = {
-    _id: decoded.jti,
-    _type: "user",
-    userName: decoded.name,
-    image: decoded.picture,
-  };
-
-  console.log(doc);
-};
+import { client } from "../client";
 
 const errorResponse = (response) => {
   console.log(response);
 };
 
 const Login = () => {
+  const navigate = useNavigate();
+  const successResponse = (response) => {
+    const decoded = jwt_decode(response.credential);
+
+    const doc = {
+      _id: decoded.jti,
+      _type: "user",
+      userName: decoded.name,
+      image: decoded.picture,
+    };
+    localStorage.setItem("user", JSON.stringify(doc));
+
+    client.createIfNotExists(doc).then(() => {
+      navigate("/", { replace: true });
+    });
+  };
   return (
     <div className="flex justify-start items-center flex-col h-screen">
       <div className="relative w-full h-f">
