@@ -91,6 +91,7 @@ const CreatePin = ({ user }) => {
       )}
 
       <div className=" flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5  w-full">
+        {/* Image Upload Area */}
         <div className="bg-secondaryColor p-3 flex flex-0.7 w-full">
           <div className=" flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-420">
             {loading && <Spinner />}
@@ -137,6 +138,7 @@ const CreatePin = ({ user }) => {
           </div>
         </div>
 
+        {/* Form fields */}
         <div className="flex flex-1 flex-col gap-6 lg:pl-5 mt-5 w-full">
           <input
             type="text"
